@@ -1,0 +1,37 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs / exports (keep only sanitized copies)
+*.evtx
+*.etl
+
+# Secrets (never commit)
+*.pfx
+*.pem
+*.key
+*.ppk
+*.kdbx
+
+# Large binaries
+*.iso
+*.vhd
+*.vhdx
+*.ova
+*.vmdk
+
+# Local triage outputs (raw, kept local)
+reports/
+*.log
+*.tmp
+*.bak
+*.dmp
+*.vmem
+*.vmsn
+*.vmsd
+*.nvram
+*.vmx
+*.vmxf
+.vs/

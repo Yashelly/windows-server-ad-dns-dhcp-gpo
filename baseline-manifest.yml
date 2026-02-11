@@ -1,0 +1,34 @@
+# Evidence policy
+# - Evidence maturity is tracked in STATUS.md (Captured / Partial / Planned).
+# - Placeholders exist only where capture is pending (structure remains reviewable).
+# - Published evidence is sanitized where practical (no secrets, no identifiable user data).
+# - Lab-only identifiers may remain for technical context (RFC1918 IPs, hostnames, example.local).
+
+baseline:
+  name: "Windows Server Infrastructure - AD DS + DNS + DHCP + GPO"
+  version: "0.1.0"
+  updated: "2026-02-11"
+  environment:
+    type: "home lab / sandbox"
+    network:
+      subnet: "10.10.10.0/24 (example)"
+      dns_server: "10.10.10.10 (example)"
+    dhcp_range: "scope 10.10.10.0/24 (active lease shown in evidence)"
+    domain:
+      fqdn: "example.local (sanitized example)"
+  scope:
+    in_scope:
+      - "AD DS (domain controller, OU structure, groups)"
+      - "DNS (zones, forwarders, basic troubleshooting)"
+      - "DHCP (scope, options, reservations)"
+      - "GPO hardening (example policies + validation)"
+      - "Client validation (domain join, gpresult, logonserver)"
+      - "Ops runbooks (incident-style workflows)"
+    out_of_scope:
+      - "Production migration"
+      - "Complex multi-site AD (sites/subnets)"
+      - "Enterprise PKI/ADCS (planned for future)"
+  quality_gates:
+    - "Each module has: steps, validation, rollback, evidence checklist"
+    - "Evidence is sanitized and referenced by ID"
+    - "No secrets (passwords, keys) committed"
