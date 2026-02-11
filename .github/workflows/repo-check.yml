@@ -1,0 +1,20 @@
+name: repo-check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  basic:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run basic consistency checks
+        run: python tools/check_repo_consistency.py
