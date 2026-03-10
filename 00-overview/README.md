@@ -7,7 +7,11 @@
 
 ## Operating principles
 - **Evidence-first:** captured proof lives in `99-evidence/` and is referenced by ID.
-- **Modules:** each major component has its own folder with steps + validation.
+- **Modules:** each major component has its own folder with:
+  - goal and implementation summary
+  - validation
+  - rollback
+  - evidence checklist (optional)
 - **Documentation:** short, operational, and easy to review.
 
 ## Overview docs
@@ -16,6 +20,11 @@
 - `naming-standards/` -> naming used in this repo
 - `operating-model/` -> folder layout, status tracking, evidence policy
 - `prereqs/` -> lab prerequisites and assumptions
+
+## Source of truth
+Lab constants are canonical in:
+- `baseline-manifest.yml` -> `baseline.environment`
+- `LAB-CONSTANTS.md` (human-readable)
 
 ## Sanitization
 Publishing rules are in `sanitization.md`.

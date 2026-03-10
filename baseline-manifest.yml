@@ -5,30 +5,56 @@
 # - Lab-only identifiers may remain for technical context (RFC1918 IPs, hostnames, example.local).
 
 baseline:
-  name: "Windows Server Infrastructure - AD DS + DNS + DHCP + GPO"
-  version: "0.1.0"
-  updated: "2026-02-11"
+  name: Windows Server AD/DNS/DHCP/GPO lab
+  version: 0.1.1
   environment:
-    type: "home lab / sandbox"
-    network:
-      subnet: "10.10.10.0/24 (example)"
-      dns_server: "10.10.10.10 (example)"
-    dhcp_range: "scope 10.10.10.0/24 (active lease shown in evidence)"
     domain:
-      fqdn: "example.local (sanitized example)"
-  scope:
-    in_scope:
-      - "AD DS (domain controller, OU structure, groups)"
-      - "DNS (zones, forwarders, basic troubleshooting)"
-      - "DHCP (scope, options, reservations)"
-      - "GPO hardening (example policies + validation)"
-      - "Client validation (domain join, gpresult, logonserver)"
-      - "Ops runbooks (incident-style workflows)"
-    out_of_scope:
-      - "Production migration"
-      - "Complex multi-site AD (sites/subnets)"
-      - "Enterprise PKI/ADCS (planned for future)"
-  quality_gates:
-    - "Each module has: steps, validation, rollback, evidence checklist"
-    - "Evidence is sanitized and referenced by ID"
-    - "No secrets (passwords, keys) committed"
+      dns_root: example.local
+      netbios: EXAMPLE
+    hosts:
+      dc:
+        hostname: DC01
+        fqdn: dc01.example.local
+        ipv4: 10.10.10.10
+      client:
+        hostname: CL01
+        ipv4: 10.10.10.50
+    network:
+      subnet: 10.10.10.0/24
+      dns_server: 10.10.10.10
+      default_gateway: null
+    dhcp:
+      scope: 10.10.10.0/24
+      range:
+        start: 10.10.10.50
+        end: 10.10.10.200
+      lease_duration_days: 8
+      options:
+        "003_router": null
+        "006_dns_servers":
+          - 10.10.10.10
+        "015_dns_domain_name": example.local
+    dns:
+      zones:
+        - example.local
+        - _msdcs.example.local
+    sysvol_paths:
+      - "\\\\dc01\\SYSVOL"
+      - "\\\\example.local\\SYSVOL"
+
+quality_gates:
+  module_docs:
+    required_sections:
+      - Goal
+      - Implementation summary
+      - Validation
+      - Rollback
+    evidence: optional
+  runbooks:
+    required_sections:
+      - Symptoms
+      - Checks
+      - Fix
+      - Validation
+      - Rollback
+    evidence: optional

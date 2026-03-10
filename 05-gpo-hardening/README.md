@@ -8,14 +8,25 @@ Policy example: block access to **Control Panel** and **Settings** for users in 
 ## Implementation summary
 - Created a pilot OU (`PilotUsers`)
 - Linked `GPO-USER-Prohibit-Control-Panel` to the pilot OU
-- Enabled policy:
-  - `User Configuration -> Policies -> Administrative Templates -> Control Panel -> Prohibit access to Control Panel and PC settings` = **Enabled**
+- Enabled the Administrative Templates user policy **"Prohibit access to Control Panel and PC settings"**
+
+## Validation
+Validation confirms policy application from a domain-joined client:
+- `gpupdate /force` completes successfully
+- `gpresult /r` shows the expected GPO under user policy scope
+- Attempting to open Control Panel or Windows Settings is blocked for the test user
+
+## Rollback
+Rollback is straightforward and low risk:
+- unlink the pilot GPO from the OU, or
+- set the policy back to **Not Configured**
 
 ## Evidence
-- `EVD-GPO-001_linked-gpo-to-ou-pilotusers.png` -> GPO linked to OU
-- `EVD-GPO-002_prohibit-controlpanel-enabled.png` -> setting enabled
-- `EVD-VAL-003_controlpanel-blocked.png` -> client behavior (restriction dialog)
-- `EVD-VAL-001_gpresult-user.png` -> applied GPO confirmation (`gpresult`)
+- GPMC screenshot showing OU + linked GPO
+- Policy setting screenshot (enabled)
+- Client-side blocked action screenshot
+- `gpresult` snippet or screenshot
 
-## Notes
-- This is a user-targeted example policy. Computer-targeted policies can be added later as part of a baseline set (see `ROADMAP.md`).
+See also:
+- `../99-evidence/EVIDENCE-MAP.md`
+- `../07-ops-runbooks/gpo-not-applying.md`

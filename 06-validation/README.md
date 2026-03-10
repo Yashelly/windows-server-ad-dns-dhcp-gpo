@@ -7,20 +7,42 @@ Confirm end-to-end functionality:
 - DNS resolution works for domain hostnames
 - Pilot GPO is applied and enforces the intended restriction
 
+## Implementation summary
+- Validation is performed from the domain-joined client `CL01` using built-in command-line checks and visible policy outcomes.
+- The validation set confirms identity (`whoami`, `%logonserver%`), network configuration (`ipconfig /all`), policy application (`gpresult`), and DNS resolution (`nslookup`).
+
+## Checks
+Expected checks:
+```cmd
+whoami
+echo %logonserver%
+ipconfig /all
+gpresult /r
+nslookup dc01.example.local
+```
+
+## Expected results
+
+- whoami returns a domain user context
+- %logonserver% resolves to \\DC01
+- ipconfig /all shows DHCP lease details and DNS = 10.10.10.10
+- gpresult /r shows the pilot GPO under applied user policies
+- nslookup dc01.example.local resolves to 10.10.10.10
+
+## Planned exports
+
+- dcdiag summary
+- gpresult /h
+- repadmin /replsummary (single-DC lab: minimal but still valid reference)
+- additional ipconfig /all screenshot or text export
+
+## Rollback
+If validation fails after a recent change:
+- revert the most recent GPO or DHCP/DNS change
+- re-check domain DNS settings on the client
+- re-run gpupdate /force
+- use the relevant runbook in ../07-ops-runbooks/
+
 ## Evidence
-- Domain logon proof -> `EVD-VAL-002_cl01-domain-logon.png`
-- Group Policy application (`gpresult`) -> `EVD-VAL-001_gpresult-user.png`
-- Control Panel blocked -> `EVD-VAL-003_controlpanel-blocked.png`
-- DHCP on client (`ipconfig /all`) -> `EVD-LAB-002_ipconfig-cl01.png`
-- DNS resolution (`nslookup`) -> `EVD-DNS-002_nslookup-dc01.png`
-
-## Commands used (lab)
-- `whoami`
-- `echo %logonserver%`
-- `gpresult /r`
-- `ipconfig /all`
-- `nslookup dc01.example.local`
-
-## Planned exports (sanitized)
-- `gpresult /h` -> publish to `99-evidence/exports/`
-- `dcdiag` -> publish to `99-evidence/exports/`
+Reference IDs are tracked in:
+- ../99-evidence/EVIDENCE-MAP.md

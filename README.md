@@ -11,41 +11,46 @@ The focus is **hands-on implementation + verifiable evidence** (sanitized screen
 
 ## Repository structure
 Core scope (captured evidence in `99-evidence/`):
-- `00-overview/` -> architecture + operating model
-- `01-environment-build/` -> lab prerequisites and VM setup notes
-- `02-ad-ds/` -> AD DS setup (role install, post-promotion state)
-- `03-dns/` -> DNS configuration and checks
-- `04-dhcp/` -> DHCP scope + lease validation
-- `05-gpo-hardening/` -> pilot GPO (user restriction example)
-- `06-validation/` -> end-to-end verification steps
-- `07-ops-runbooks/` -> incident-style operational notes
-- `99-evidence/` -> sanitized screenshots + evidence map
+- `00-overview/` - architecture, naming, assumptions, operating model
+- `01-environment-build/` - VM/network setup and initial server prep
+- `02-ad-ds/` - domain controller promotion and AD DS verification
+- `03-dns/` - DNS zone/record validation
+- `04-dhcp/` - DHCP scope/options and lease validation
+- `05-gpo-hardening/` - pilot OU + sample user GPO
+- `06-validation/` - end-to-end validation from client side
+- `07-ops-runbooks/` - short troubleshooting runbooks
 
-Optional expansion modules (documentation-first; evidence may be added later):
-- `08-file-services/` -> SMB shares + NTFS permissions (example incident notes)
-- `09-backup-recovery/` -> basic backup/recovery approach for the lab
+Expansion modules (documentation-first, evidence pending):
+- `08-file-services/` - SMB shares + NTFS permissions model
+- `09-backup-recovery/` - basic backup/recovery notes for the lab
 
-Auxiliary folders:
-- `.github/`
-- `incidents/`
-- `proposals/`
-- `ticket-notes/`
-- `scripts/`
-- `templates/`
-- `tools/`
-
-## Navigation
-- Start here: `START-HERE.md`
-- Architecture: `00-overview/architecture.md`
-- Validation steps: `06-validation/README.md`
-- Evidence index: `99-evidence/README.md` + `99-evidence/EVIDENCE-MAP.md`
-- Status tracker: `STATUS.md`
-
-## Sanitization
-Publishing rules: `sanitization.md`.
+Supporting repo files:
+- `99-evidence/` - screenshot index and proof map
+- `templates/` - repo documentation templates
+- `tools/` - simple consistency checks
+- `STATUS.md` - implementation/evidence maturity
+- `ROADMAP.md` - next planned increments
+- `START-HERE.md` - quick entry point
+- `baseline-manifest.yml` - compact baseline scope + evidence policy
 
 ## Quick facts
-- Domain: `example.local` (NetBIOS: `EXAMPLE`) - lab-only placeholder
-- Subnet: `10.10.10.0/24`
-- DC: `DC01` (static IP `10.10.10.10`)
-- Client: `CL01` (DHCP lease shown in evidence)
+- Domain: `example.local`
+- DC: `DC01` (`10.10.10.10`)
+- Client: `CL01`
+- DHCP scope: `10.10.10.50-10.10.10.200`
+- Pilot OU: `PilotUsers`
+- Sample GPO: prohibit access to Control Panel / PC settings
+
+For environment constants, see:
+- `LAB-CONSTANTS.md`
+- `baseline-manifest.yml`
+
+## Evidence style
+Evidence is sanitized and indexed in:
+- `99-evidence/EVIDENCE-MAP.md`
+
+## Current release
+See:
+- `START-HERE.md`
+- `STATUS.md`
+- `ROADMAP.md`
