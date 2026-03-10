@@ -8,12 +8,13 @@ Short operational runbooks. Each runbook follows:
 - Rollback
 - Evidence (optional)
 
+## Lab conventions (source of truth)
+- See: `../LAB-CONSTANTS.md` (canonical in `../baseline-manifest.yml`)
+
 ## Runbooks
 - `dns-resolution-fails.md`
 - `dhcp-client-no-lease.md`
 - `gpo-not-applying.md`
 - `domain-join-fails.md`
-
-## Captured evidence
-
-Runbooks are documentation-only; evidence is optional.
+- `ad-user-lifecycle.md`
+- `access-denied.md`
